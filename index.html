@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduFocus - Mis Tareas</title>
+<style>
+body{background:#0d1117;color:white;font-family:sans-serif;padding:15px;margin:0}
+h1{text-align:center}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:15px;margin:10px 0}
+input{width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #333;background:#0d1117;color:white;box-sizing:border-box}
+button{width:100%;padding:12px;background:#238636;color:white;border:0;border-radius:8px;font-weight:bold;margin:5px 0}
+.tarea{background:#0d1117;border:1px solid #21262d;padding:10px;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<h1>📚 EduFocus</h1>
+<div class="card">
+<input id="mat" placeholder="Materia: Ej. Historia">
+<input id="trab" placeholder="Trabajo: Ej. Ensayo pag 20">
+<button onclick="add()">Guardar trabajo</button>
+</div>
+<div class="card"><h3>Mis trabajos</h3><div id="lista"></div></div>
+<script>
+let t=JSON.parse(localStorage.getItem('eduf')||'[]');
+function ver(){lista.innerHTML=t.length?t.map((x,i)=>`<div class=tarea><span><b>${x.m}:</b> ${x.t}</span><span onclick="del(${i})">✅</span></div>`).join(''):'<p>No tienes trabajos aún</p>';localStorage.setItem('eduf',JSON.stringify(t))}
+function add(){if(!mat.value||!trab.value)return alert('Escribe materia y trabajo');t.push({m:mat.value,t:trab.value});mat.value='';trab.value='';ver()}
+function del(i){t.splice(i,1);ver()}ver()
+</script>
+</body>
+</html>
